@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Just For You ❤️</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 105, 180, 0.14), transparent 30%),
+        radial-gradient(circle at 80% 10%, rgba(170, 100, 255, 0.15), transparent 30%),
+        #0b0710;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Stars */
+
+    #stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0.2;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    /* Main */
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 80px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: min(900px, 100%);
+      text-align: center;
+    }
+
+    /* Hero */
+
+    .hero {
+      min-height: 100vh;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d8a8ff;
+      margin-bottom: 25px;
+    }
+
+    .name-button {
+      border: none;
+      background: transparent;
+      color: white;
+      font-family: Georgia, serif;
+      font-size: clamp(55px, 13vw, 110px);
+      cursor: pointer;
+      line-height: 1;
+      transition: 0.5s ease;
+      text-shadow:
+        0 0 20px rgba(255, 130, 210, 0.25);
+    }
+
+    .name-button:hover {
+      transform: scale(1.04);
+      text-shadow:
+        0 0 30px rgba(255, 130, 210, 0.6);
+    }
+
+    .name-button.revealed {
+      color: #ffb7e4;
+      text-shadow:
+        0 0 25px rgba(255, 100, 190, 0.5);
+    }
+
+    .tap-hint {
+      margin-top: 20px;
+      color: #a99dad;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .hero-text {
+      max-width: 650px;
+      margin: 35px auto 0;
+      color: #cfc5d2;
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .main-button {
+      margin-top: 35px;
+      padding: 15px 26px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+      transition: 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .main-button:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-3px);
+    }
+
+    /* Birthday */
+
+    .birthday {
+      background:
+        radial-gradient(circle at center, rgba(255, 120, 200, 0.08), transparent 50%);
+    }
+
+    .small-title {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 12px;
+      color: #c8a8d8;
+      margin-bottom: 20px;
+    }
+
+    .birthday h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(30px, 7vw, 60px);
+      font-weight: normal;
+      line-height: 1.2;
+    }
+
+    .number {
+      font-family: Georgia, serif;
+      font-size: clamp(110px, 25vw, 220px);
+      line-height: 0.9;
+      margin: 25px 0;
+      color: #ffb5df;
+      text-shadow:
+        0 0 40px rgba(255, 120, 200, 0.25);
+    }
+
+    .birthday-sub {
+      color: #aaa0ad;
+      font-size: 16px;
+    }
+
+    .display-name {
+      transition: 0.4s;
+    }
+
+    /* Message */
+
+    .message h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(32px, 7vw, 60px);
+      font-weight: normal;
+      line-height: 1.2;
+    }
+
+    .message-intro {
+      color: #9f949f;
+      margin-top: 15px;
+    }
+
+    .message-card {
+      margin: 40px auto 0;
+      max-width: 700px;
+      padding: 35px;
+      text-align: left;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(15px);
+      box-shadow:
+        0 20px 80px rgba(0,0,0,0.25);
+    }
+
+    .message-card p {
+      color: #d6ccd7;
+      line-height: 1.9;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .message-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Secret */
+
+    .secret h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(32px, 7vw, 58px);
+      font-weight: normal;
+    }
+
+    .secret-sub {
+      margin-top: 15px;
+      color: #9e939e;
+    }
+
+    .secret-box {
+      margin: 35px auto;
+      max-width: 650px;
+      padding: 30px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.035);
+    }
+
+    .secret-quote {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      line-height: 1.6;
+      color: #ddd0df;
+    }
+
+    .secret-message {
+      display: none;
+      margin-top: 30px;
+      animation: reveal 0.8s ease forwards;
+    }
+
+    .secret-message.show {
+      display: block;
+    }
+
+    .secret-message h3 {
+      font-family: Georgia, serif;
+      color: #ffb7e4;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .secret-message p {
+      color: #c9beca;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Final */
+
+    .final {
+      min-height: 90vh;
+    }
+
+    .cake {
+      font-size: 80px;
+      margin-bottom: 25px;
+      animation: float 3s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .final h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(38px, 8vw, 70px);
+      font-weight: normal;
+    }
+
+    .final p {
+      max-width: 600px;
+      margin: 25px auto;
+      color: #b8adb9;
+      line-height: 1.8;
+    }
+
+    .love {
+      color: #ffb7e4;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      margin-top: 35px;
+    }
+
+    /* Floating Hearts */
+
+    .heart {
+      position: fixed;
+      bottom: -30px;
+      pointer-events: none;
+      z-index: 10;
+      animation: rise 4s linear forwards;
+      opacity: 0.8;
+    }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(0) scale(0.7);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-110vh) translateX(var(--move)) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Mobile */
+
+    @media (max-width: 600px) {
+
+      section {
+        padding: 70px 18px;
+      }
+
+      .hero-text {
+        font-size: 15px;
+      }
+
+      .message-card {
+        padding: 25px;
+      }
+
+      .message-card p {
+        font-size: 15px;
+      }
+
+      .secret-box {
+        padding: 25px 20px;
+      }
+
+      .secret-quote {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="stars"></div>
+
+  <main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+      <div class="container">
+
+        <div class="eyebrow">
+          September 20 · Just for you
+        </div>
+
+        <button class="name-button" id="nameButton">
+          User
+        </button>
+
+        <div class="tap-hint" id="tapHint">
+          tap / click the name
+        </div>
+
+        <p class="hero-text">
+          I didn't want to send you just another birthday paragraph.
+          So I made you a little place on the internet instead. ❤️
+        </p>
+
+        <button
+          class="main-button"
+          onclick="scrollToBirthday()"
+        >
+          Come see what I made ✨
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- BIRTHDAY -->
+
+    <section class="birthday" id="birthday">
+      <div class="container">
+
+        <div class="small-title">
+          Today
+        </div>
+
+        <h2>
+          My favorite person turns
+        </h2>
+
+        <div class="number">
+          17
+        </div>
+
+        <p class="birthday-sub">
+          and somehow you keep getting more special
+        </p>
+
+        <h2 style="margin-top:35px;">
+          Happy 17th Birthday,
+          <span class="display-name">User</span>. ❤️
+        </h2>
+
+        <p class="birthday-sub" style="margin-top:20px;">
+          Today is about you, and I hope you feel just how loved you are.
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- MESSAGE -->
+
+    <section class="message">
+      <div class="container">
+
+        <div class="small-title">
+          I could've just texted this...
+        </div>
+
+        <h2>
+          But I wanted you<br>
+          to have this.
+        </h2>
+
+        <div class="message-card">
+
+          <p>
+            <span class="display-name">User</span>,
+            you're one of those people who can turn an ordinary day
+            into something I actually want to remember.
+          </p>
+
+          <p>
+            And honestly, I don't think I say it enough,
+            but having you in my life means a lot to me.
+          </p>
+
+          <p>
+            So for your birthday, I don't just wish you a happy day.
+            I wish you a year full of little moments that make you
+            genuinely happy.
+          </p>
+
+          <p>
+            And selfishly...
+            I hope I get to be part of quite a few of those moments. 🤍
+          </p>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SECRET -->
+
+    <section class="secret">
+      <div class="container">
+
+        <div class="small-title">
+          One little secret
+        </div>
+
+        <h2>
+          There's something<br>
+          I saved for last.
+        </h2>
+
+        <p class="secret-sub">
+          You have to open it yourself.
+        </p>
+
+        <div class="secret-box">
+
+          <div class="secret-quote">
+            “Out of all the things I could have made for your birthday,
+            I wanted to make something that came from me.”
+          </div>
+
+          <button
+            class="main-button"
+            id="secretButton"
+          >
+            Open the last message
+          </button>
+
+          <div
+            class="secret-message"
+            id="secretMessage"
+          >
+
+            <h3>
+              Happy Birthday,
+              <span class="display-name">User</span>. ❤️
+            </h3>
+
+            <p>
+              Keep smiling, keep being you, and please know that
+              somewhere out here is someone who is really,
+              really glad that you exist.
+            </p>
+
+            <p>
+              Here's to 17 —
+              and to all the memories we haven't made yet.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- FINAL -->
+
+    <section class="final">
+      <div class="container">
+
+        <div class="cake">
+          🎂
+        </div>
+
+        <h2>
+          Make a wish,<br>
+          birthday girl.
+        </h2>
+
+        <p>
+          Close your eyes for a second.
+          Make your wish.
+          And then go make 17 unforgettable.
+        </p>
+
+        <div class="love">
+          With love, always. ❤️
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <script>
+
+    /* =========================
+       STAR BACKGROUND
+    ========================= */
+
+    const starsContainer = document.getElementById("stars");
+
+    for (let i = 0; i < 130; i++) {
+
+      const star = document.createElement("div");
+
+      star.classList.add("star");
+
+      star.style.left = Math.random() * 100 + "%";
+      star.style.top = Math.random() * 100 + "%";
+
+      star.style.animationDelay =
+        Math.random() * 3 + "s";
+
+      star.style.opacity =
+        Math.random() * 0.8;
+
+      starsContainer.appendChild(star);
+    }
+
+
+    /* =========================
+       NAME REVEAL
+    ========================= */
+
+    const nameButton =
+      document.getElementById("nameButton");
+
+    const tapHint =
+      document.getElementById("tapHint");
+
+    let nameRevealed = false;
+
+    nameButton.addEventListener("click", () => {
+
+      if (nameRevealed) return;
+
+      nameRevealed = true;
+
+      nameButton.textContent = "Sabeera";
+
+      nameButton.classList.add("revealed");
+
+      tapHint.textContent = "for you ❤️";
+
+      document
+        .querySelectorAll(".display-name")
+        .forEach(element => {
+          element.textContent = "Sabeera";
+        });
+
+      createHearts(18);
+    });
+
+
+    /* =========================
+       SCROLL BUTTON
+    ========================= */
+
+    function scrollToBirthday() {
+
+      document
+        .getElementById("birthday")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+
+
+    /* =========================
+       SECRET MESSAGE
+    ========================= */
+
+    const secretButton =
+      document.getElementById("secretButton");
+
+    const secretMessage =
+      document.getElementById("secretMessage");
+
+    secretButton.addEventListener("click", () => {
+
+      secretMessage.classList.add("show");
+
+      secretButton.textContent =
+        "Opened ❤️";
+
+      secretButton.disabled = true;
+
+      createHearts(25);
+    });
+
+
+    /* =========================
+       FLOATING HEARTS
+    ========================= */
+
+    function createHearts(amount = 10) {
+
+      const symbols = [
+        "♥",
+        "♡",
+        "✦",
+        "✧"
+      ];
+
+      for (let i = 0; i < amount; i++) {
+
+        const heart =
+          document.createElement("div");
+
+        heart.classList.add("heart");
+
+        heart.textContent =
+          symbols[
+            Math.floor(
+              Math.random() * symbols.length
+            )
+          ];
+
+        heart.style.left =
+          Math.random() * 100 + "vw";
+
+        heart.style.fontSize =
+          (12 + Math.random() * 18) + "px";
+
+        heart.style.setProperty(
+          "--move",
+          (Math.random() * 160 - 80) + "px"
+        );
+
+        heart.style.animationDuration =
+          (3 + Math.random() * 3) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 6500);
+      }
+    }
+
+
+    /* =========================
+       LITTLE AMBIENT EFFECT
+    ========================= */
+
+    setInterval(() => {
+
+      if (Math.random() > 0.65) {
+        createHearts(1);
+      }
+
+    }, 3500);
+
+  </script>
+
+</body>
+</html>
